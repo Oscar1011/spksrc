@@ -13,6 +13,7 @@ fi
 SERVICE_EXE="env HOME=${SYNOPKG_PKGDEST}/var ${SYNOPKG_PKGDEST}/bin/syncthing"
 SERVICE_OPTIONS="-home=${SYNOPKG_PKGDEST}/var"
 
+GROUP="sc-syncthing"
 LEGACY_GROUP="users"
 
 service_postinst ()

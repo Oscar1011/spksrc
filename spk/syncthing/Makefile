@@ -8,7 +8,7 @@ UNSUPPORTED_ARCHS = $(PPC_ARCHES)
 
 DEPENDS = cross/busybox cross/$(SPK_NAME)
 
-MAINTAINER = cytec
+MAINTAINER = Safihre
 DESCRIPTION = Automatically sync files via secure, distributed technology.
 DESCRIPTION_FRE = Synchronisation automatique de fichiers via une technologie sûre et distribuée.
 RELOAD_UI = yes
