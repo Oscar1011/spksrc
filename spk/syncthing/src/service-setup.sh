@@ -9,6 +9,10 @@ if [ -f ${CONFIG_DIR}/options.conf ]; then
     source ${CONFIG_DIR}/options.conf
 fi
 
+# Overwrite the Makefile variables
+SERVICE_EXE="env HOME=${SYNOPKG_PKGDEST}/var ${SYNOPKG_PKGDEST}/bin/syncthing"
+SERVICE_OPTIONS="-home=${SYNOPKG_PKGDEST}/var"
+
 LEGACY_GROUP="users"
 
 service_postinst ()

@@ -25,10 +25,11 @@ SERVICE_SETUP = src/service-setup.sh
 SERVICE_PORT = 7070
 SERVICE_PORT_TITLE = $(DISPLAY_NAME)
 
-
 # Add special options to start-stop-daemon command
-SERVICE_EXE=env HOME=$${SYNOPKG_PKGDEST}/var $${SYNOPKG_PKGDEST}/bin/syncthing
-SERVICE_OPTIONS=-home=$${SYNOPKG_PKGDEST}/var
+# Need them to trigger start-stop-daemon setup, but
+# we substitute them later in service-setup.sh
+SERVICE_EXE=dummy
+SERVICE_OPTIONS=dummy
 
 # Admin link for in DSM UI
 ADMIN_PORT = $(SERVICE_PORT)
