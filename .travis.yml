@@ -1,0 +1,64 @@
+# Travis config file to build spk package
+# Adapted from https://github.com/torrentalle/spksrc/tree/gogs-build
+# And https://github.com/jelmerj/spksrc
+
+# Only build tags
+if: tag IS present
+
+env:
+  matrix:
+    # Basic packages
+    - SYNOARCH=publish-arch-qoriq-5.2
+    - SYNOARCH=publish-arch-x64-5.2
+    - SYNOARCH=publish-arch-evansport-5.2
+    - SYNOARCH=publish-arch-88f6281-5.0
+    - SYNOARCH=publish-arch-alpine-5.2
+    - SYNOARCH=publish-arch-armada370-5.2
+    - SYNOARCH=publish-arch-armada375-5.2
+    - SYNOARCH=publish-arch-armadaxp-5.2
+    - SYNOARCH=publish-arch-armada38x-5.2
+    - SYNOARCH=publish-arch-comcerto2k-5.2
+    - SYNOARCH=publish-arch-monaco-5.2
+    - SYNOARCH=publish-arch-ppc853x-5.2
+    - SYNOARCH=publish-arch-rtd1296-6.1
+    # In case of libstdc++ dependency
+    - SYNOARCH=publish-arch-qoriq-6.1
+    - SYNOARCH=publish-arch-x64-6.1
+    - SYNOARCH=publish-arch-evansport-6.1
+    - SYNOARCH=publish-arch-88f6281-6.1
+    - SYNOARCH=publish-arch-alpine-6.1
+    - SYNOARCH=publish-arch-armada370-6.1
+    - SYNOARCH=publish-arch-armada375-6.1
+    - SYNOARCH=publish-arch-armada38x-6.1
+    - SYNOARCH=publish-arch-armadaxp-6.1
+    - SYNOARCH=publish-arch-comcerto2k-6.1
+    - SYNOARCH=publish-arch-monaco-6.1
+
+notifications:
+  email: false
+
+# The "sudo: required" image is fastest
+sudo: required
+dist: trusty
+
+# Output is too verbose for TravisCI, so we hide it
+# Remove the ">/dev/null" part to debug!
+# make arch-$SYNOARCH always return exit code 0.
+# The "ls" line is Sto test if SPK has been build.
+
+script:
+  # Fill default values
+  - make setup-synocommunity
+  # Add my API-key
+  - sed -i -e "s|PUBLISH_API_KEY=.*|PUBLISH_API_KEY=$API_KEY|" local.mk
+  # Build and publish the packages
+  - PKG=${TRAVIS_TAG%%-*}
+  - docker pull synocommunity/spksrc
+  - docker run -it -v `pwd`:/spksrc synocommunity/spksrc /bin/bash -c "cd /spksrc && cd spk/$PKG && make $SYNOARCH>/dev/null"
+  - ls packages/*.spk
+
+services:
+- docker
+
+git:
+  depth: 1
