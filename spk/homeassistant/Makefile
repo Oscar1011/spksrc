@@ -6,6 +6,9 @@ SPK_ICON = src/${SPK_NAME}.png
 BUILD_DEPENDS = cross/python3 cross/setuptools cross/pip cross/wheel
 DEPENDS = cross/cffi cross/nmap  # for python-libnmap
 DEPENDS += cross/gmp cross/mpfr cross/mpc  # for gmpy2
+DEPENDS += cross/libyaml cross/bcrypt
+DEPENDS += cross/pip
+DEPENDS += cross/cryptography
 WHEELS = src/requirements.txt
 SPK_DEPENDS = "python3>=3.6.8"
 
